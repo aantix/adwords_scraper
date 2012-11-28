@@ -51,7 +51,8 @@ module AdwordsScraper
           binding.pry
         end
         position = "#{location}:#{p}"
-        ad_container << [ position, parse_ad(ad_doc) ]
+        #ad_container << [ position, parse_ad(ad_doc) ]
+        ad_container << parse_ad(ad_doc) if location == 'right'
       end
     end
     ad_container
@@ -60,19 +61,20 @@ module AdwordsScraper
   def self.parse_ad(doc)
     container = {}
 
-    desc = ''
     d = doc.search('.ac').first.children
-    d.each do |i|
-      if i.name == 'br'
-        desc = desc + ' '
-      else
-        desc = desc + i.text
-      end
-    end
-    container['description'] = desc.gsub('  ', ' ')
 
-    container['title'] = doc.search('h3').text # doc title text
-    container['displayurl'] = doc.search('cite').text # display URL
+    desc_index = 1
+    d.each do |i|
+      container["Description#{desc_index}"]||=''
+      if i.name == 'br'
+        desc_index+=1
+        next
+      end
+      container["Description#{desc_index}"]+=i.text
+    end
+
+    container['Title'] = doc.search('h3').text # doc title text
+    container['URL'] = doc.search('cite').text # display URL
     container['boxed_warning'] = doc.search('.pwl').text # boxed warning
     container['review'] = doc.search('.f div').text # supplemental text in gray
 
