@@ -49,7 +49,8 @@ module AdwordsScraper
         begin
           p = ad_doc.search('a').first['id'].match(/\d/)[0]
         rescue => e
-          binding.pry
+          #binding.pry
+          Rails.logger.error("error adwords_scraper #{e}")
         end
         position = "#{location}:#{p}"
         #ad_container << [ position, parse_ad(ad_doc) ]
