@@ -32,7 +32,7 @@ module AdwordsScraper
     selectors = {}
     selectors['top'] = "#tads .vsta"
     #selectors['right'] = "#mbEnd li" # .vsra (old)
-    selectors['right'] = "#mbEnd .ads-ad"
+    selectors['right'] = "#mbEnd .ads-ad" #google added .action-menu-item to the previous li selector
     selectors['bottom'] = "#tadsb li"
 
     selectors.each do |location, selector|
