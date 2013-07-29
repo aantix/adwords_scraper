@@ -31,7 +31,8 @@ module AdwordsScraper
     container = {}	
     selectors = {}
     selectors['top'] = "#tads .vsta"
-    selectors['right'] = "#mbEnd li" # .vsra (old)
+    #selectors['right'] = "#mbEnd li" # .vsra (old)
+    selectors['right'] = "#mbEnd .ads-ad" #google added .action-menu-item to the previous li selector
     selectors['bottom'] = "#tadsb li"
 
     selectors.each do |location, selector|
@@ -48,7 +49,8 @@ module AdwordsScraper
         begin
           p = ad_doc.search('a').first['id'].match(/\d/)[0]
         rescue => e
-          binding.pry
+          #binding.pry
+          Rails.logger.error("error adwords_scraper #{e}")
         end
         position = "#{location}:#{p}"
         #ad_container << [ position, parse_ad(ad_doc) ]
