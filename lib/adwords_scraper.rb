@@ -31,7 +31,8 @@ module AdwordsScraper
     container = {}	
     selectors = {}
     selectors['top'] = "#tads .vsta"
-    selectors['right'] = "#mbEnd li" # .vsra (old)
+    #selectors['right'] = "#mbEnd li" # .vsra (old)
+    selectors['right'] = "#mbEnd .ads-ad"
     selectors['bottom'] = "#tadsb li"
 
     selectors.each do |location, selector|
